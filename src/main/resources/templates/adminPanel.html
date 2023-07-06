@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf Application - Bootstrap Table</title>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/adminPage">Admin Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/login">Button1
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/correctNews">Correct news</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/archiveItem">To Archive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 mt-5 mb-5">
+            <table id="example" class="table table-bordered" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Active</th>
+                    <th>Ban</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.username}">User</td>
+                    <td th:text="${user.password}">Password</td>
+                    <td th:text="${user.list}">Role</td>
+                    <td th:text="${user.active}">Active</td>
+                    <td>
+                        <form th:action="@{/ban/} + ${{user.id}}" method="get">
+                            <button th:id="'table_entry_childs_button_' + ${user.id}" type="submit">
+                                <i>ban</i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/edit/} + ${{user.id}}" method="get">
+                            <button th:id="'table_entry_childs_button_' + ${user.id}" type="submit">
+                                <i>edit</i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script>
+
+
+</script>
+
+</body>
+</html>

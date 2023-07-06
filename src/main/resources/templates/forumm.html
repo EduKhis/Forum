@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/forumm.css}" rel="stylesheet"/>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<form th:action="@{/personalPage}" method="get">
+    <input type="submit" value="Profile"/>
+</form>
+<div class="container">
+
+    <div class="screen">
+        <form class="login" th:action="@{/createMessage}" METHOD="post" enctype="multipart/form-data">
+            <div class="login__field">
+                <i class="login__icon fas fa-user"></i>
+                <label for="w3review">Tag:</label>
+                <select class="form-control" name="teg" id="dropDownList">
+                    <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+            <div class="login__field">
+                <i class="login__icon fas fa-lock"></i>
+
+                <label for="w3review">Description:</label>
+                <textarea style="resize:none" id="w3review" name="description" rows="4" cols="50"></textarea>
+            </div>
+            <tr th:if="${response.empty}">
+                <td colspan="2"> Input description</td>
+            </tr>
+            <tr th:if="${!response.empty}">
+                <td colspan="2"> Good</td>
+            </tr>
+            <p>
+                <input type="file" name="filename"/>
+            </p>
+            <button class="button login__submit">
+                <span class="button__text">Create massage</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+            </button>
+
+        </form>
+
+
+        <form class="form-control" th:action="@{/filter}" method="post">
+            <select class="form-control" name="teg">
+                <option value="">ALL</option>
+                <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+
+            </select>
+            <input type="date" name="first"/>
+            <input type="date" name="last"/>
+            <input type="submit" name="submit"/>
+
+        </form>
+        <form class="form-control" th:action="@{/newForum}" method="get">
+            <select class="form-control" name="sort">
+                <option value="Default">Default</option>
+                <option value="Newest to Oldest">Newest to Oldest</option>
+                <option value="Oldest to Newest">Oldest to Newest</option>
+                <option value="Name A-Z">Name A-Z</option>
+                <option value="Name Z-A">Name Z-A</option>
+            </select>
+            <input type="submit" name="submit"/>
+        </form>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mt-5 mb-5">
+                    <table id="example" class="table table-bordered" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th> Tag</th>
+                            <th> Description</th>
+                            <th> Date</th>
+                            <th> User</th>
+                            <th> Image</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${messages.empty}">
+                            <td colspan="2"> List is empty</td>
+                        </tr>
+                        <tr th:each="message : ${messages}">
+                            <td><span th:text="${message.teg}"> </span></td>
+                            <td><span th:text="${message.description}"> </span></td>
+                            <td><span th:text="${message.dateForOutput}">  </span></td>
+                            <td><span th:text="${message.username}">  </span></td>
+                            <td><img th:src="@{/img/{filename}(filename = ${message.filename})}" width="50"> </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+        <div class="social-login">
+            <label>Hello,</label>
+            <label th:text="${name}">Hello</label>
+            <div class="social-icons">
+                <a href="#" class="social-login__icon fab fa-instagram"></a>
+                <a href="#" class="social-login__icon fab fa-facebook"></a>
+                <a href="#" class="social-login__icon fab fa-twitter"></a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
